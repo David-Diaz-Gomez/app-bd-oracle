@@ -91,73 +91,94 @@
     </header>
     <div class="form-wrap">
       <form action="/enviar-validacion" method="POST" class="needs-validation" novalidate>
-        <div class="row">
-          <div class="col-md-6 form-group">
-            <label for="consecUser">ID Usuario</label>
-            <input type="text" class="form-control" name="consecUser" required pattern="\\d+">
-          </div>
-          <div class="col-md-6 form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" name="nombre" required pattern="[A-Za-z\s]+">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 form-group">
-            <label for="apellido">Apellido</label>
-            <input type="text" class="form-control" name="apellido" required pattern="[A-Za-z\s]+">
-          </div>
-          <div class="col-md-6 form-group">
-            <label for="user">Usuario</label>
-            <input type="text" class="form-control" name="user" required>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 form-group">
-            <label for="fechaRegistro">Fecha de Registro</label>
-            <input type="date" class="form-control" name="fechaRegistro" required>
-          </div>
-          <div class="col-md-6 form-group">
-            <label for="email">Correo electrónico</label>
-            <input type="email" class="form-control" name="email" required>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 form-group">
-            <label for="celular">Celular</label>
-            <input type="text" class="form-control" name="celular" required pattern="\\d+">
-          </div>
-          <div class="col-md-6 form-group">
-            <label for="codUbica">País</label>
-            <select class="form-control" name="codUbica" required>
-              <% ubicaciones.forEach(([codigo, nombre]) => { %>
-                <option value="<%= codigo %>"><%= nombre %></option>
-              <% }); %>
-            </select>
-          </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col-12 text-center">
-            <button type="submit" class="btn btn-primary">Enviar correo de validación</button>
-          </div>
-        </div>
-      </form>
+  <div class="row">
+    <div class="col-md-6 form-group">
+      <label for="consecUser">ID Usuario</label>
+      <input type="text" class="form-control" name="consecUser" required pattern="[A-Za-z0-9]+">
+      <div class="valid-feedback">Correcto</div>
+      <div class="invalid-feedback">ID alfanumérico obligatorio (ej: A123).</div>
+    </div>
+    <div class="col-md-6 form-group">
+      <label for="nombre">Nombre</label>
+      <input type="text" class="form-control" name="nombre" required pattern="[A-Za-z\s]+">
+      <div class="valid-feedback">¡Bien!</div>
+      <div class="invalid-feedback">Solo letras y espacios.</div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-6 form-group">
+      <label for="apellido">Apellido</label>
+      <input type="text" class="form-control" name="apellido" required pattern="[A-Za-z\s]+">
+      <div class="valid-feedback">Perfecto</div>
+      <div class="invalid-feedback">Solo letras y espacios.</div>
+    </div>
+    <div class="col-md-6 form-group">
+      <label for="user">Usuario</label>
+      <input type="text" class="form-control" name="user" required>
+      <div class="valid-feedback">Correcto</div>
+      <div class="invalid-feedback">Campo obligatorio.</div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-6 form-group">
+      <label for="fechaRegistro">Fecha de Registro</label>
+      <input type="date" class="form-control" name="fechaRegistro" required>
+      <div class="valid-feedback">Fecha válida</div>
+      <div class="invalid-feedback">Este campo es obligatorio.</div>
+    </div>
+    <div class="col-md-6 form-group">
+      <label for="email">Correo electrónico</label>
+      <input type="email" class="form-control" name="email" required>
+      <div class="valid-feedback">Correo válido</div>
+      <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-6 form-group">
+      <label for="celular">Celular</label>
+      <input type="text" class="form-control" name="celular" required pattern="[0-9]+">
+      <div class="valid-feedback">Número válido</div>
+      <div class="invalid-feedback">Ingresa solo números.</div>
+    </div>
+    <div class="col-md-6 form-group">
+      <label for="codUbica">País</label>
+      <select class="form-control" name="codUbica" required>
+        <option value="">Seleccione un país</option>
+        <% ubicaciones.forEach(([codigo, nombre]) => { %>
+          <option value="<%= codigo %>"><%= nombre %></option>
+        <% }); %>
+      </select>
+      <div class="valid-feedback">País seleccionado</div>
+      <div class="invalid-feedback">Por favor, elige un país.</div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12 text-center">
+      <button type="submit" class="btn btn-primary">Enviar correo de validación</button>
+    </div>
+  </div>
+</form>
+
     </div>
   </div>
   <script>
-    // Validación Bootstrap
-    (function () {
-      'use strict';
-      var forms = document.querySelectorAll('.needs-validation');
-      Array.prototype.slice.call(forms).forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-          if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    })();
-  </script>
+  (function () {
+    'use strict';
+    var forms = document.querySelectorAll('.needs-validation');
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  })();
+</script>
 </body>
 </html>
